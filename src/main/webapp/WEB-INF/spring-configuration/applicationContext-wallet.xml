@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    
+    <bean id="blockHeaderService" class="com.bdx.bwallet.server.core.BlockHeaderService">
+        <property name="obelisk" ref="obeliskClient" />
+    </bean>
+    
+	<bean id="walletService" class="com.bdx.bwallet.server.core.WalletService" init-method="setup" destroy-method="destroy">
+        <property name="obelisk" ref="obeliskClient" />
+        <property name="blockHeaderService" ref="blockHeaderService" />
+        <property name="corePoolSize" value="${wallet.service.corePoolSize}" />
+        <property name="maximumPoolSize" value="${wallet.service.maximumPoolSize}" />
+        <property name="initializeQueueSize" value="${wallet.service.initializeQueueSize}" />
+        <property name="cleanInterval" value="${wallet.service.cleanInterval}" />
+    </bean>
+	
+</beans>
